@@ -19,16 +19,16 @@
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=15d0b9f1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=eff37dcc" />
 
   
     <link rel="shortcut icon" href="../../../_static/favicon.png"/>
     <link rel="canonical" href="https://pygmt.org//dev/_modules/pygmt/src/grdview.html" />
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=e3ca22a0"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=7a1a5d8a"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=ccdb6887"></script>
       <script src="../../../_static/sg-tags.js?v=d80f6fa4"></script>
@@ -82,9 +82,15 @@
     
               <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../intro/index.html">Intro to PyGMT</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Project Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ecosystem.html">PyGMT Ecosystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../presentations.html">Presentations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../citing.html">Citing PyGMT</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
 <ul>
@@ -93,35 +99,32 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../projections/index.html">Projections</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../external_resources.html">External Resources</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Reference Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Reference Guide</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../api/index.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../techref/index.html">Technical Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../minversions.html">Minimum Supported Versions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ecosystem.html">Ecosystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changes.html">Changelog</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Development</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../team.html">PyGMT Team</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributors Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../maintenance.html">Maintainers Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../team.html">PyGMT Team</a></li>
 </ul>
 
 
     
         <p class="caption">
-            <span class="caption-text">Getting help and contributing</span>
+            <span class="caption-text">Getting help</span>
         </p>
         <ul>
             
-                <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/.github/blob/main/CODE_OF_CONDUCT.md"><i class="fa fa-gavel fa-fw"></i> Code of Conduct</a></li>
+                <li class="toctree-l1"><a href="https://forum.generic-mapping-tools.org"><i class="fa fa-comment fa-fw"></i> GMT Forum</a></li>
             
-                <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/pygmt/blob/main/LICENSE.txt"><i class="fa fa-book fa-fw"></i> License</a></li>
+                <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/pygmt/issues"><i class="fa fa-bug fa-fw"></i> Bug Report (GitHub)</a></li>
             
-                <li class="toctree-l1"><a href="https://forum.generic-mapping-tools.org"><i class="fa fa-comment fa-fw"></i> Contact</a></li>
-            
-                <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/pygmt"><i class="fa fa-github fa-fw"></i> Source Code</a></li>
+                <li class="toctree-l1"><a href="https://github.com/GenericMappingTools/.github/blob/main/CODE_OF_CONDUCT.md"><i class="fa fa-handshake-o fa-fw"></i> Code of Conduct</a></li>
             
         </ul>
     
@@ -169,7 +172,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygmt.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">GMTParameterError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pygmt.helpers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">build_arg_list</span><span class="p">,</span>
-    <span class="n">deprecate_parameter</span><span class="p">,</span>
     <span class="n">fmt_docstring</span><span class="p">,</span>
     <span class="n">is_given</span><span class="p">,</span>
     <span class="n">use_alias</span><span class="p">,</span>
@@ -180,7 +182,7 @@
 <span class="n">__doctest_skip__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;grdview&quot;</span><span class="p">]</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_alias_option_Q</span><span class="p">(</span>  <span class="c1"># noqa: N802</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_alias_option_Q</span><span class="p">(</span>  <span class="c1"># ruff: ignore[invalid-function-name]</span>
     <span class="n">surftype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mesh_fill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">monochrome</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">nan_transparent</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -270,14 +272,8 @@
 
 
 <span class="nd">@fmt_docstring</span>
-<span class="c1"># TODO(PyGMT&gt;=0.20.0): Remove the deprecated &#39;*pen&#39; parameters.</span>
-<span class="c1"># TODO(PyGMT&gt;=0.20.0): Remove the deprecated &#39;drapegrid&#39; parameter.</span>
-<span class="nd">@deprecate_parameter</span><span class="p">(</span><span class="s2">&quot;contourpen&quot;</span><span class="p">,</span> <span class="s2">&quot;contour_pen&quot;</span><span class="p">,</span> <span class="s2">&quot;v0.18.0&quot;</span><span class="p">,</span> <span class="n">remove_version</span><span class="o">=</span><span class="s2">&quot;v0.20.0&quot;</span><span class="p">)</span>
-<span class="nd">@deprecate_parameter</span><span class="p">(</span><span class="s2">&quot;facadepen&quot;</span><span class="p">,</span> <span class="s2">&quot;facade_pen&quot;</span><span class="p">,</span> <span class="s2">&quot;v0.18.0&quot;</span><span class="p">,</span> <span class="n">remove_version</span><span class="o">=</span><span class="s2">&quot;v0.20.0&quot;</span><span class="p">)</span>
-<span class="nd">@deprecate_parameter</span><span class="p">(</span><span class="s2">&quot;meshpen&quot;</span><span class="p">,</span> <span class="s2">&quot;mesh_pen&quot;</span><span class="p">,</span> <span class="s2">&quot;v0.18.0&quot;</span><span class="p">,</span> <span class="n">remove_version</span><span class="o">=</span><span class="s2">&quot;v0.20.0&quot;</span><span class="p">)</span>
-<span class="nd">@deprecate_parameter</span><span class="p">(</span><span class="s2">&quot;drapegrid&quot;</span><span class="p">,</span> <span class="s2">&quot;drape_grid&quot;</span><span class="p">,</span> <span class="s2">&quot;v0.18.0&quot;</span><span class="p">,</span> <span class="n">remove_version</span><span class="o">=</span><span class="s2">&quot;v0.20.0&quot;</span><span class="p">)</span>
 <span class="nd">@use_alias</span><span class="p">(</span><span class="n">I</span><span class="o">=</span><span class="s2">&quot;shading&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="s2">&quot;coltypes&quot;</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="s2">&quot;interpolation&quot;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">grdview</span><span class="p">(</span>  <span class="c1"># noqa: PLR0913</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">grdview</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">grid</span><span class="p">:</span> <span class="n">PathLike</span> <span class="o">|</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span>
     <span class="n">cmap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -379,7 +375,7 @@
 <span class="sd">        value in the grid. However, if ``region`` was used to set *zmin/zmax* then</span>
 <span class="sd">        *zmin* is used if it is less than the grid minimum value. Use ``facade_pen`` and</span>
 <span class="sd">        ``facade_fill`` to control the appearance of the plane.</span>
-<span class="sd">        **Note**: For GMT&lt;=6.6.0, *zmin* set in ``region`` has no effect due to a GMT</span>
+<span class="sd">        **Note**: For GMT&lt;=6.7.0, *zmin* set in ``region`` has no effect due to a GMT</span>
 <span class="sd">        bug.</span>
 <span class="sd">    facade_fill</span>
 <span class="sd">        Fill for the frontal facade between the plane specified by ``plane`` and the</span>
@@ -447,13 +443,12 @@
 <span class="sd">    &gt;&gt;&gt; # Show the plot</span>
 <span class="sd">    &gt;&gt;&gt; fig.show()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_activate_figure</span><span class="p">()</span>
-
     <span class="c1"># Enable &#39;plane&#39; if &#39;facade_fill&#39; or &#39;facade_pen&#39; are set</span>
     <span class="k">if</span> <span class="n">plane</span> <span class="ow">is</span> <span class="kc">False</span> <span class="ow">and</span> <span class="p">(</span><span class="n">facade_fill</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">facade_pen</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">plane</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="c1"># Workaround for GMT bug https://github.com/GenericMappingTools/gmt/pull/8838</span>
+    <span class="c1"># Workaround for GMT bugs https://github.com/GenericMappingTools/gmt/pull/8838 and</span>
+    <span class="c1"># https://github.com/GenericMappingTools/gmt/pull/9123.</span>
     <span class="c1"># Fix the plane value to be the grid minimum if plane=True.</span>
     <span class="c1"># Notes:</span>
     <span class="c1"># 1. It&#39;s the minimum of the grid, not a subset of the grid defined by &#39;region&#39;.</span>
@@ -461,8 +456,8 @@
     <span class="c1">#    it is less than the grid minimum value.&quot;. We can&#39;t add a workaround for this</span>
     <span class="c1">#    case since we can&#39;t parse zmin/zmax from &#39;region&#39; if &#39;region&#39; was set in</span>
     <span class="c1">#    previous plotting commands.</span>
-    <span class="c1"># TODO(GMT&gt;6.6.0): Remove this workaround.</span>
-    <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">__gmt_version__</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">&quot;6.6.0&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">plane</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># TODO(GMT&gt;6.7.0): Remove this workaround.</span>
+    <span class="k">if</span> <span class="n">Version</span><span class="p">(</span><span class="n">__gmt_version__</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">Version</span><span class="p">(</span><span class="s2">&quot;6.7.0&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">plane</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">plane</span> <span class="o">=</span> <span class="n">grdinfo</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">per_column</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">4</span><span class="p">]</span>
 
     <span class="n">aliasdict</span> <span class="o">=</span> <span class="n">AliasSystem</span><span class="p">(</span>
@@ -495,6 +490,7 @@
     <span class="p">)</span>
     <span class="n">aliasdict</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
+    <span class="bp">self</span><span class="o">.</span><span class="n">_activate_figure</span><span class="p">()</span>
     <span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">lib</span><span class="p">:</span>
         <span class="k">with</span> <span class="p">(</span>
             <span class="n">lib</span><span class="o">.</span><span class="n">virtualfile_in</span><span class="p">(</span><span class="n">check_kind</span><span class="o">=</span><span class="s2">&quot;raster&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">grid</span><span class="p">)</span> <span class="k">as</span> <span class="n">vingrd</span><span class="p">,</span>
@@ -517,9 +513,9 @@
 
   <div role="contentinfo">
     <p>&#169; Copyright 2017-2026, The PyGMT Developers.
-      <span class="commit">Revision <code><a href="https://github.com/GenericMappingTools/pygmt/commit/e3fd63ef6">e3fd63ef</a></code>.
+      <span class="commit">Revision <code><a href="https://github.com/GenericMappingTools/pygmt/commit/a66612986">a6661298</a></code>.
       </span>
-      <span class="lastupdated">Last updated on Jul 15, 2026.
+      <span class="lastupdated">Last updated on Aug 13, 2026.
       </span></p>
   </div>
 
