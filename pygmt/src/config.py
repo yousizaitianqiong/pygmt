@@ -8,6 +8,15 @@ from typing import ClassVar
 
 from pygmt.clib import Session
 
+_MAP_PEN_KEYS = (
+    "MAP_DEFAULT_PEN",
+    "MAP_FRAME_PEN",
+    "MAP_GRID_PEN_PRIMARY",
+    "MAP_GRID_PEN_SECONDARY",
+    "MAP_TICK_PEN_PRIMARY",
+    "MAP_TICK_PEN_SECONDARY",
+)
+
 
 class config:  # ruff: ignore[invalid-class-name]
     """
@@ -207,19 +216,21 @@ class config:  # ruff: ignore[invalid-class-name]
 
         # Save values so that we can revert to their initial values
         self.old_defaults = {}
+        args = []
         with Session() as lib:
-            for key in kwargs:
-                if key in self._special_keywords:
-                    for k in self._special_keywords[key]:
-                        self.old_defaults[k] = lib.get_default(k)
-                else:
-                    self.old_defaults[key] = lib.get_default(key)
+            for key, value in kwargs.items():
+                text = f"{value}"
+                keys = self._special_keywords.get(key, (key,))
+                if key == "MAP_DEFAULT_PEN" and text.startswith("+"):
+                    # GMT propagates the color to the frame, grid and tick pens.
+                    keys = _MAP_PEN_KEYS
+                for name in keys:
+                    self.old_defaults[name] = lib.get_default(name)
+                args.append(f"{key}={text}")
 
         # call gmt set to change GMT defaults
         with Session() as lib:
-            lib.call_module(
-                module="set", args=[f"{key}={value}" for key, value in kwargs.items()]
-            )
+            lib.call_module(module="set", args=args)
 
     def __enter__(self):
         """
@@ -231,8 +242,26 @@ class config:  # ruff: ignore[invalid-class-name]
         """
         Revert GMT configurations to initial values.
         """
+        args = []
+        for key, value in self.old_defaults.items():
+            if key not in _MAP_PEN_KEYS:
+                args.append(f"{key}={value}")
+                continue
+
+            # GMT's gmt_putpen omits automatic widths and solid styles. When
+            # present, the last field contains the dash pattern and its phase.
+            width_color, _, last = value.rpartition(",")
+            if ":" in last:
+                # Reloading an automatic-width pen can append extra phases.
+                style = ":".join(last.split(":", maxsplit=2)[:2])
+            else:
+                width_color = value
+                style = "solid"
+            width, _, color = width_color.rpartition(",")
+
+            # Apply the width first. An empty width in the second assignment
+            # keeps that width and identifies the remaining fields unambiguously.
+            args.extend((f"{key}={width or 'auto'}", f"{key}=,{color},{style}"))
+
         with Session() as lib:
-            lib.call_module(
-                module="set",
-                args=[f"{key}={value}" for key, value in self.old_defaults.items()],
-            )
+            lib.call_module(module="set", args=args)

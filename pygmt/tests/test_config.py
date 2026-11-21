@@ -2,9 +2,107 @@
 Test pygmt.config.
 """
 
+import re
+
 import pytest
 from pygmt import Figure, config
+from pygmt.clib import Session
 from pygmt.params import Axis, Frame
+
+
+def _get_defaults(*keys):
+    """
+    Read settings for the current figure.
+    """
+    with Session() as lib:
+        return [lib.get_default(key) for key in keys]
+
+
+def test_config_restores_automatic_frame_pen_width():
+    """
+    Restore the automatic frame pen width after a temporary explicit width.
+    """
+    Figure()
+    initial = _get_defaults("MAP_FRAME_PEN")
+    with config(MAP_FRAME_PEN="4p,blue"):
+        assert _get_defaults("MAP_FRAME_PEN") == ["4p,blue"]
+    assert _get_defaults("MAP_FRAME_PEN") == initial
+
+
+@pytest.mark.parametrize(
+    ("initial", "temporary", "expected"),
+    [
+        ("2.25p,red", "4p,blue,5_3:1p", r"2\.25p,red"),
+        ("auto,darkred,7_4:1p", "4p,blue,solid", r"darkred,7_4:1p(?::0p)*"),
+    ],
+    ids=["explicit-solid", "automatic-dashes"],
+)
+def test_config_restores_frame_pen_style(initial, temporary, expected):
+    """
+    Restore both solid and dashed frame pens after changing their line styles.
+    """
+    Figure()
+    config(MAP_FRAME_PEN=initial)
+    assert re.fullmatch(expected, _get_defaults("MAP_FRAME_PEN")[0])
+    with config(MAP_FRAME_PEN=temporary):
+        assert "blue" in _get_defaults("MAP_FRAME_PEN")[0]
+    # GMT can append extra phase suffixes when reloading an automatic-width pen.
+    assert re.fullmatch(expected, _get_defaults("MAP_FRAME_PEN")[0])
+
+
+@pytest.mark.parametrize("group", ["MAP_GRID_PEN", "MAP_TICK_PEN"])
+def test_config_restores_pen_group(group):
+    """
+    Restore distinct primary and secondary pens across nested contexts.
+    """
+    Figure()
+    primary, secondary = f"{group}_PRIMARY", f"{group}_SECONDARY"
+    config(**{primary: "2.25p,red", secondary: "auto,green"})
+    assert _get_defaults(primary, secondary) == ["2.25p,red", "green"]
+    with config(**{group: "4.25p,blue"}):
+        assert _get_defaults(primary, secondary) == ["4.25p,blue"] * 2
+        with pytest.raises(ZeroDivisionError), config(**{group: "6.25p,orange"}):
+            raise ZeroDivisionError
+        assert _get_defaults(primary, secondary) == ["4.25p,blue"] * 2
+    assert _get_defaults(primary, secondary) == ["2.25p,red", "green"]
+
+
+@pytest.mark.parametrize(
+    ("initial", "color", "expected"),
+    [
+        ("2.25p,red", "blue", r"2\.25p,blue"),
+        ("auto,red,dashed", "blue", r"blue,dashed(?::0p)+"),
+    ],
+    ids=["explicit-width", "automatic-dashes"],
+)
+def test_config_updates_only_pen_color(initial, color, expected):
+    """
+    Apply a direct color-only update without changing the width or style.
+    """
+    Figure()
+    config(MAP_FRAME_PEN=initial)
+    config(MAP_FRAME_PEN=color)
+    assert re.fullmatch(expected, _get_defaults("MAP_FRAME_PEN")[0])
+
+
+def test_config_restores_map_default_pen_colors():
+    """
+    Restore the pens recolored by a plus-prefixed MAP_DEFAULT_PEN.
+    """
+    Figure()
+    keys = (
+        "MAP_DEFAULT_PEN",
+        "MAP_FRAME_PEN",
+        "MAP_GRID_PEN_PRIMARY",
+        "MAP_GRID_PEN_SECONDARY",
+        "MAP_TICK_PEN_PRIMARY",
+        "MAP_TICK_PEN_SECONDARY",
+    )
+    config(MAP_FRAME_PEN="2.25p,red", MAP_GRID_PEN_PRIMARY="0.8p,darkgreen")
+    initial = _get_defaults(*keys)
+    with config(MAP_DEFAULT_PEN="+1.25p,blue"):
+        assert all(pen.endswith("blue") for pen in _get_defaults(*keys))
+    assert _get_defaults(*keys) == initial
 
 
 @pytest.mark.mpl_image_compare
@@ -168,6 +266,8 @@ def test_config_map_grid_pen():
     MAP_GRID_PEN_SECONDARY.
     """
     fig = Figure()
+    # Hold the line width fixed so this image checks the color change.
+    config(MAP_GRID_PEN="thick")
     with config(MAP_GRID_PEN="thick,red"):
         fig.basemap(
             region=["2020-1-24T21:00", "2020-1-25T00:00", 0, 1],
@@ -228,6 +328,8 @@ def test_config_map_tick_pen():
     MAP_TICK_PEN_SECONDARY.
     """
     fig = Figure()
+    # Hold the line width fixed so this image checks the color change.
+    config(MAP_TICK_PEN="thick")
     with config(MAP_TICK_PEN="thick,red"):
         fig.basemap(
             region=["2020-1-24T21:00", "2020-1-25T00:00", 0, 1],
